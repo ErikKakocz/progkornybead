@@ -1,7 +1,107 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>inf.unideb.hu</groupId>
-  <artifactId>Progkornybead</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>EmployeeFinder</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<description>
+  	
+  
+  </description>
+	<licenses>
+		<license>
+			<comments>Encoding: utf-8</comments>
+			<distribution>repo</distribution>
+			<name>GNU GENERAL PUBLIC LICENSE</name>
+		</license>
+	</licenses>
+	<scm>
+		<connection>https://github.com/ErikKakocz/progkornybead.git</connection>
+		<url>https://github.com/ErikKakocz/progkornybead</url>
+	</scm>
+	<developers>
+		<developer>
+			<name>Erik Kakócz</name>
+			<email>kakocz.erik@gmail.com</email>
+		</developer>
+	</developers>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>inf.unideb.hu</groupId>
+	<artifactId>Progkornybead</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>EmployeeFinder</name>
+	<dependencies>
+
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<executions>
+					<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireJavaVersion>
+									<version>1.8</version>
+								</requireJavaVersion>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.21.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>clover-maven-plugin</artifactId>
+
+				<configuration>
+					<targetPercentage>50%</targetPercentage>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.0.0</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>checkstyle</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+
+		</plugins>
+
+	</reporting>
 </project>
