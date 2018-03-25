@@ -4,6 +4,7 @@
   	
   
   </description>
+  <inceptionYear>2018</inceptionYear>
 	<licenses>
 		<license>
 			<comments>Encoding: utf-8</comments>
@@ -27,7 +28,17 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>EmployeeFinder</name>
 	<dependencies>
-
+		<dependency> 
+  			<groupId>org.slf4j</groupId>
+  			<artifactId>slf4j-log4j12</artifactId>
+  			<version>1.8.0-beta2</version>
+		</dependency>
+		<dependency>
+   			<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    		<version>4.12</version>
+    		<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -85,8 +96,37 @@
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						<phase>package</phase>
+						<configuration>
+							<archive>
+								<manifest>
+									<mainClass>main.Main</mainClass>
+								</manifest>
+							</archive>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							</configuration>
+						</execution>
+					</executions>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>3.0.0</version>
+				<configuration>
+					<configLocation>checkstyle.xml</configLocation>
+				</configuration>
 				<reportSets>
 					<reportSet>
 						<reports>
