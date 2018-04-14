@@ -1,5 +1,5 @@
 /**
- * Package containing all models used persisting data.
+ * Package containing all models used in persisting data.
  *
  * @author Erik Kakócz a.k.a. Shadowwolf
  *
