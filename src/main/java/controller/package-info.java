@@ -1,5 +1,5 @@
 /**
- * This package contains classes the controller classes of the fxml file(s).
+ * This package contains the controller classes of the fxml file(s).
  * 
  * <p>
  *    

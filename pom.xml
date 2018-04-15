@@ -13,7 +13,7 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>https://github.com/ErikKakocz/progkornybead.git</connection>
+		<connection>scm:https://github.com/ErikKakocz/progkornybead.git</connection>
 		<url>https://github.com/ErikKakocz/progkornybead</url>
 	</scm>
 	<developers>
