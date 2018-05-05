@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="374.0" prefWidth="443.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="NameLabel" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="106.0" text="Department Name:" />
+      <Label fx:id="DeptLeaderLabel" layoutX="14.0" layoutY="41.0" text="Department Leader:" />
+      <Label layoutX="13.0" layoutY="70.0" text="Required Programming Languages:" />
+      <TableView fx:id="LanguagesTable" layoutX="29.0" layoutY="95.0" prefHeight="200.0" prefWidth="385.0">
+        <columns>
+          <TableColumn prefWidth="192.0" text="Language" />
+          <TableColumn prefWidth="192.0" text="Level" />
+        </columns>
+      </TableView>
+      <Button fx:id="OkButton" layoutX="30.0" layoutY="335.0" mnemonicParsing="false" text="Ok" />
+      <Button fx:id="CancelButton" layoutX="75.0" layoutY="335.0" mnemonicParsing="false" text="Cancel" />
+      <TextField fx:id="NameField" layoutX="120.0" layoutY="10.0" prefHeight="25.0" prefWidth="176.0" />
+      <TextField fx:id="DeptLeaderField" layoutX="127.0" layoutY="37.0" prefHeight="25.0" prefWidth="176.0" />
+      <Button fx:id="AddLanguageButton" layoutX="29.0" layoutY="302.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="EditLanguageButton" layoutX="75.0" layoutY="302.0" mnemonicParsing="false" text="Edit" />
+      <Button fx:id="RemoveLanguageButton" layoutX="119.0" layoutY="302.0" mnemonicParsing="false" text="Remove" />
+   </children>
+</AnchorPane>

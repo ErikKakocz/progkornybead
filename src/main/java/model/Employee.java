@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,19 +29,19 @@ public class Employee implements Serializable {
 	
 	private Gender gender;
 	
-	private int age;
+	private Date birthDate;
 	
 	
 	public Employee() {
 		super();
 	}
 
-	public Employee(long id, String name, Gender gender, int age, long deptId) {
+	public Employee(long id, String name, Gender gender, Date BirthDate, long deptId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
-		this.age = age;
+		this.birthDate = BirthDate;
 	}
 
 	public String getName() {
@@ -59,16 +60,21 @@ public class Employee implements Serializable {
 		this.gender = gender;
 	}
 
-	public int getAge() {
-		return age;
+	public Date getAge() {
+		return birthDate;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setAge(Date age) {
+		this.birthDate = age;
 	}
 
 	public long getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", birthDate=" + birthDate + "]";
 	}
 	
 	
