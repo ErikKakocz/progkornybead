@@ -24,7 +24,9 @@ public class Department implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
 	
-	Requirement requirement;
+	Requirement[] requirement;
+	
+	String DepartmentLeader;
 	
 	private String departmentName;
 
@@ -35,7 +37,7 @@ public class Department implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Department(long id, Requirement required, String departmentName) {
+	public Department(long id, Requirement[] required, String departmentName) {
 		super();
 		this.id = id;
 		this.requirement = required;
@@ -48,7 +50,7 @@ public class Department implements Serializable{
 	 * 
 	 * @return RequirementLevel
 	 */
-	public Requirement getRequiredLevel() {
+	public Requirement[] getRequiredLevel() {
 		return requirement;
 	}
 
@@ -57,7 +59,7 @@ public class Department implements Serializable{
 	 * @param requiredLevel
 	 */
 	
-	public void setRequiredLevel(Requirement requirement) {
+	public void setRequiredLevel(Requirement[] requirement) {
 		this.requirement = requirement;
 	}
 
@@ -71,6 +73,20 @@ public class Department implements Serializable{
 
 	public long getId() {
 		return id;
+	}
+	
+	
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getDepartmentLeader() {
+		return DepartmentLeader;
+	}
+
+	public void setDepartmentLeader(String departmentLeader) {
+		DepartmentLeader = departmentLeader;
 	}
 
 	@Override

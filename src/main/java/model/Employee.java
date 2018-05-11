@@ -2,12 +2,16 @@ package model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.time.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 
 /**
@@ -29,19 +33,22 @@ public class Employee implements Serializable {
 	
 	private Gender gender;
 	
-	private Date birthDate;
+	private LocalDate birthDate;
+	
+	private Requirement[] knownLangs;
 	
 	
 	public Employee() {
 		super();
 	}
 
-	public Employee(long id, String name, Gender gender, Date BirthDate, long deptId) {
+	public Employee(long id, String name, Gender gender, LocalDate BirthDate, long deptId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
 		this.birthDate = BirthDate;
+		
 	}
 
 	public String getName() {
@@ -60,23 +67,39 @@ public class Employee implements Serializable {
 		this.gender = gender;
 	}
 
-	public Date getAge() {
+	public LocalDate getAge() {
 		return birthDate;
 	}
 
-	public void setAge(Date age) {
-		this.birthDate = age;
+	public void setAge(LocalDate date) {
+		this.birthDate = date;
 	}
 
 	public long getId() {
 		return id;
+	}
+	
+	
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", gender=" + gender + ", birthDate=" + birthDate + "]";
 	}
-	
+
+	public Requirement[] getKnownLangs() {
+		return knownLangs;
+	}
+
+	public void setKnownLangs(Requirement[] knownLangs) {
+		this.knownLangs = knownLangs;
+	}
+
+
+
 	
 	
 	

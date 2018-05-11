@@ -27,7 +27,7 @@
 	<artifactId>Progkornybead</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>EmployeeFinder</name>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -56,14 +56,14 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<resources>
 			<resource>
 				<directory>src/main/resources/</directory>
 			</resource>
 		</resources>
-	
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -119,7 +119,7 @@
 				<version>1.6.0</version>
 				<executions>
 					<execution>
-						
+
 						<goals>
 							<goal>exec</goal>
 						</goals>
