@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.Main;
+import model.Contract;
 import model.Department;
 import model.Employee;
 
@@ -47,10 +48,15 @@ public class PersistenceManager {
 	}
 	
 	public void persistDepartment(Department dept) {
-		log.info("Persisting "+dept);
+		try {
+		log.info("Persisting " + dept);
 		manager.getTransaction().begin();
 		manager.persist(dept);
 		manager.getTransaction().commit();
+		}catch(Exception e) {
+			log.error(e.getStackTrace().toString());
+			
+		}
 	}
 	
 	
@@ -143,5 +149,40 @@ public class PersistenceManager {
 		}
 		return null;
 	}
+
+	public void persistContract(Contract cont) {
+		manager.getTransaction().begin();
+		manager.persist(cont);
+		manager.getTransaction().commit();
+	}
 	
+	public void updateContract(Contract cont) {
+		Contract contract=manager.find(Contract.class, cont.getId());
+		
+		manager.getTransaction().begin();
+		if(cont.getDeptId()!=(contract.getDeptId()))
+			contract.setDeptId(cont.getDeptId());
+		manager.getTransaction().commit();	
+	}
+	
+	public void removeContract(Contract cont) {
+		manager.getTransaction().begin();
+		manager.remove(cont);	
+		manager.getTransaction().commit();	
+	}
+	
+	public Contract findContractByEmployee(Employee emp) {
+		manager.getTransaction().begin();
+		Query query=manager.createQuery("select c from Contract c where employeeid=?1");
+		query.setParameter("?1", emp.getId());
+		Contract contract=(Contract)query.getSingleResult();
+		manager.getTransaction().commit();
+		
+		return contract;
+	}
+
+	public Department getDepartmentById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

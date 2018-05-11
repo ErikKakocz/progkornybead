@@ -31,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.Main;
+import model.Contract;
 import model.Department;
 import model.Employee;
 import model.Gender;
@@ -38,9 +39,9 @@ import model.Requirement;
 import persistence.PersistenceManager;
 
 /**
- * The controller class controlling the employees tab of the GUI.
+ * The controller class controlling the employees tab and departments tab of the GUI.
  * 
- * @author Shadowwolf
+ * @author Erik Kakócz
  *
  */
 
@@ -180,7 +181,7 @@ public class AppController {
 				list.addAll(selected.getKnownLangs());
 				ProgLanguagesTable.setItems(list);
 				
-				DepartmentValueLabel.setText(getDeptOf(selected));
+				DepartmentValueLabel.setText("not yet");
 			}
 		}catch(Exception e) {
 			log.error("Error: "+e.getStackTrace());
@@ -188,6 +189,13 @@ public class AppController {
 		}
 	}
 
+	/**
+	 * The method responsible for refreshing the database.
+	 * 
+	 * @author Erik Kakócz
+	 *
+	 */
+	
 	public void refreshDatabase() {
 		ObservableList<Employee> list=persistenceManager.getAllEmployees();
 		if(list!=null) {
@@ -199,11 +207,20 @@ public class AppController {
 		
 	}
 	
+	/**
+	 * Returns the name of the department given employee works at.
+	 * 
+	 * @author Erik Kakócz
+	 *
+	 */
+	
 	private String getDeptOf(Employee selected) {
-		// TODO Auto-generated method stub
-		return "Not Yet implemented. please consult sóhivatal!";
+		long id=persistenceManager.findContractByEmployee(selected).getDeptId();
+		return persistenceManager.getDepartmentById(id).getDepartmentName(); 
 	}
 
+	
+	
 	public PersistenceManager getPersistenceManager() {
 		return persistenceManager;
 	}
@@ -214,6 +231,13 @@ public class AppController {
 		refreshDepartmentDatabase();
 	}
 	
+	/**
+	 * Method running when the add button is clicked on the employees tab. 
+	 * Brings up a window where an employee can be added to the database.
+	 * 
+	 * @author Erik Kakócz
+	 *
+	 */
 
 	public void onAddEmployeeClicked() {
 		Stage employeeStage = new Stage();
@@ -247,6 +271,14 @@ public class AppController {
 		
 		
 	}
+	
+	/**
+	 * Method running when the edit button is clicked on the employees tab. 
+	 * Brings up a window where a selected employee can be edited.
+	 * 
+	 * @author Erik Kakócz
+	 *
+	 */
 	
 	public void onEditEmployeeClicked() {
 		Stage employeeStage = new Stage();
@@ -283,11 +315,85 @@ public class AppController {
 	
 	}
 	
+	/**
+	 * Method running when the delete button is clicked on the employees tab. 
+	 * Deletes selected employee.
+	 * 
+	 * @author Erik Kakócz
+	 *
+	 */
+	
 	public void onDeleteClicked() {
 		Employee employee=EmployeeList.getSelectionModel().getSelectedItem();
 		persistenceManager.deleteEmployee(employee);
 		employeesList.remove(EmployeeList.getSelectionModel().getSelectedIndex());
 		
+		
+	}
+
+
+	/**
+	 * Method running when the assign button is clicked on the employees tab. 
+	 * Brings up a window where an employee can assigned to a department.
+	 * 
+	 * @author Erik Kakócz
+	 *
+	 */
+	
+	public void assignDepartment() {
+		
+		Stage departmentAssignStage = new Stage();
+		Parent root;
+		FXMLLoader loader=new FXMLLoader();
+		URL url=getClass().getClassLoader().getResource("assign_department.fxml");
+		loader.setLocation(url);
+		
+		try {
+			root = loader.load();
+			
+			
+			departmentAssignStage.setScene(new Scene(root, 600, 400));
+			departmentAssignStage.setTitle("Assign department");
+			ContractController controller = loader.getController();
+			
+			Employee selected=EmployeeList.getSelectionModel().getSelectedItem();
+			Contract contract = persistenceManager.findContractByEmployee(selected);
+			log.error("<---------------------------------------------------------------------------------->");
+			if(contract!=null)
+				controller.setContract(contract);
+			departmentAssignStage.showAndWait();
+			log.error("sasd2");
+			Contract cont=controller.getResultContract();
+			if(contract==null && cont!=null) {
+				persistenceManager.persistContract(cont);
+				log.error("sasd3");	
+			}else if(contract!=null && cont!=null){
+				persistenceManager.updateContract(cont);
+			}
+			else
+				log.info("Cancel was pressed.");
+			
+			
+		}catch(Exception e) {
+			log.error("sasd");
+			
+		}
+	}
+
+
+	/**
+	 * Method running when the dismiss button is clicked on the employees tab. 
+	 * Deletes the contract object from database.
+	 * 
+	 * @author Erik Kakócz
+	 *
+	 */
+	
+	public void dismissFromDepartment() {
+
+		Employee selected=EmployeeList.getSelectionModel().getSelectedItem();
+		Contract contract = persistenceManager.findContractByEmployee(selected);;
+		persistenceManager.removeContract(contract);
 		
 	}
 	
@@ -296,13 +402,44 @@ public class AppController {
 	 * 
 	 * */
 	
+	/**
+	 * Method running when the assign button is clicked on the employees tab. 
+	 * Brings up a window where an employee can assigned to a department.
+	 * 
+	 * @author Erik Kakócz
+	 *
+	 */
 	
+	@FXML
+	public void selectDepartmentElement() {
+		try {
+			Department selected=DepartmentListView.getSelectionModel().getSelectedItem();
+			log.debug(selected.toString());
+			if(selected!=null) {
+				log.debug("department Name: "+selected.getDepartmentName());
+				DeptnameValueLabel.setText(selected.getDepartmentName());
+				log.debug("department leader: "+selected.getDepartmentLeader());
+				DeptLeaderValueLabel.setText(selected.getDepartmentLeader());
+				
+				
+				ObservableList<Requirement> list=LanguagesTableDept.getItems();
+				list.clear();
+				list.addAll(selected.getRequiredLevel());
+				LanguagesTableDept.setItems(list);
+			}
+		}catch(Exception e) {
+			log.error("Error: "+e.getStackTrace());
+			
+		}
+	}
 	
 	private void refreshDepartmentDatabase() {
 		ObservableList<Department> list=persistenceManager.getAllDepartments();
 		if(list!=null)
 			departmentsList.addAll(list);
 	}
+	
+	
 	
 	public void onDeptAddClicked() {
 		Stage deptStage = new Stage();
@@ -336,10 +473,47 @@ public class AppController {
 		
 	}
 	
+	public void onDeptEditClicked() {
+		Stage deptStage = new Stage();
+		Parent root;
+		FXMLLoader loader=new FXMLLoader();
+		URL url=getClass().getClassLoader().getResource("add_edit_department.fxml");
+		loader.setLocation(url);
+		
+		try {
+			root = loader.load();
+			Department dept=null;
+			dept=DepartmentListView.getSelectionModel().getSelectedItem();
+			
+			deptStage.setScene(new Scene(root, 600, 400));
+			deptStage.setTitle("Add department");
+			DepartmentController controller = loader.getController();
+			
+			controller.setDepartment(dept);
+			deptStage.showAndWait();
+			
+			dept=controller.getResultDepartment();
+			if(dept!=null) {
+				persistenceManager.updateDepartment(dept);
+				
+			}	
+			else
+				log.info("Cancel was pressed.");	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	public void onDeptDeleteClicked() {
 		Department department=DepartmentListView.getSelectionModel().getSelectedItem();
 		persistenceManager.deleteDepartment(department);
 		departmentsList.remove(DepartmentListView.getSelectionModel().getSelectedIndex());
 	}
+	
+	
 }
+
+
